@@ -1,0 +1,70 @@
+CSE 331 Homework 3.  Answers to Written questions.
+Edit this file to supply your answers.
+
+Name:  <replace this with your name>
+
+Problem 6.
+
+(a) Fibonacci failed the testThrowsIllegalArgumentException
+because it was throwing an exception when trying to get the zeroth
+fibonacci number, instead of returning 1, like it was supposed to.
+All that had to be changed was the first if statement case in getFibTerm().
+n <= 0 became n < 0 so that the zeroth number could be returned.
+
+(b) Fibonacci failed the testBaseCase because it didn't
+return 1 from getFibNum(0), and instead threw an exception.
+This was fixed by making the same change as in part a;
+n <= 0 became n < 0 so that the base case could be properly returned.
+ 
+(c) testInductiveCase failed because Fibonacci was still returning
+the base case for n = 2, when it should only be for n = 0 or 1.
+Changing the second if statement fixed this.
+n <= 2 became n < 2, making the proper fibonacci number return
+when moving beyond the base case.
+Furthermore, it was using the wrong formula to calculate the Fibonacci
+number. f_n = f_(n-1) + f_(n-2). There was a minus instead of a plus
+in the else statement. Changing this fixed the rest of the testInductiveCase
+failures.
+
+
+Problem 7. 
+
+(a)The constructor of Ball would only assign the parameter to itself.
+By assigning this.volume = volume, the object's member variable
+is properly updated.
+
+getVolume() would only return 0, never returning the actual volume.
+By returning this.volume, the volume held in the object's member variable,
+the actual volume, is returned.
+
+(b) The second method of finding the volume of the set is much better
+because it turns an O(N) method into an O(1) method, since the total
+volume is already known. Since you have to assign volumes to all of the
+Ball's in the set, you might as well just keep track of the volume as you
+go. The ability to track the volume is already there and required minimal
+changes to your code.
+
+(c) The changes I had to make to Box were to add a member that holds the
+max volume of the box, so that it can be kept track of.
+
+1. One way to sort the Ball's in the Box is to sort them the instant they are
+added into the contents of our Box. Calling getBallsFromSmallest() would just
+have to return an iterator for the contents of the Box, instead of having
+to first sort in the method. This could possibly be better since you don't
+have to calculate at the method call time, but depending on the efficiency
+of the sorting algorithm, it could become slower in the long run.
+
+Another way of sorting the Ball's is to just sort it in the getBallsFromSmallest()
+method call. Instead of just returning the iterator to the sorted list, you have to
+first sort them in the method. This could be advantageous in that you don't have
+to sort every time a Ball is added into the Box, but depending on the slowness
+of the sorting algorithm in the getBallsFromSmallest() method, it could be slower
+in the long run.
+
+2. It really depends on the speed of your sorting algorithm. If you use an algorithm
+that is very fast for sorting, right when a Ball is added, it could favor a very
+slow sorting algorithm in getBallsFromSmallest(), and vice versa. Ideally,
+it would be best to sort the Balls right when they are added since quicker
+algorithms could be implemented, like a binary search algorithm that gets the
+correct position for the new Ball to be. This allows for a quick runtime of
+the method getBallsFromSmallest, along with the method being simpler.

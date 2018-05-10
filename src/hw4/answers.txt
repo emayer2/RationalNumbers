@@ -1,0 +1,206 @@
+CSE 331 Homework 4.  Answers to Written questions.
+Edit this file to supply your answers.
+
+Name:  Ethan Mayer
+
+Problem 0.
+
+(a)
+r = p * q:
+	set r = p by doing term by term copying of all terms in p.
+	foreach term, t_q, in q:
+		foreach term, t_r, in r:
+			if any term in r has the same power as t_r * t_q:
+				replace it with the sum of the current same-power term in r and t_r * t_q.
+			else:
+				make a new term in r equal to t_r * t_q.
+
+(b)
+q = u / v:
+	copy all terms in u into r, term by term;
+	q = empty variable to hold division coefficients;
+	while max degree in r >= max degree in v:
+		t_q = (coefficient of highest degree in r) / (coefficient in highest degree of v);
+		degShift = (max degree in r) - (max degree in v);
+		foreach term, t_v, in v:
+			newDegree = (degShift) + (degree of t_v);
+			if r has a term of degree newDegree:
+				subtract (t_q * (t_v coeff.)) from term in r of degree newDegree;
+			else:
+				set the term in r of degree newDegree to be negative t_q;
+		set term in q of degree newDegree to be t_q;
+				
+(c)
+u = (x^4 + 4x^3 - 3x^2)
+v = (2x^2 + x)
+	r = copy all terms of u into q = (x^4 + 4x^3 - 3x^2);
+	q = empty variable to hold division coefficients;
+	while (max degree in r >= max degree in v):
+		Iteration 1: u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+				r = (x^4 + 4x^3 - 3x^2), q = 0:
+			t_q = (coeff. of highest r degree) / (coeff. of highest v degree) = 1/2;
+			degShift = (max degree in r) - (max degree in v) = 2
+			foreach t_v in v:
+				Iteration 1.1: t_v = 2x^2, u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ... 
+						r = (x^4 + 4x^3 - 3x^2), q = 0:
+					newDegree = (degShift) + (degree of t_v) = 4;
+					if r has term of degree newDegree: YES
+						[subtract (t_q * (t_v coeff.)) from term in r of degree newDegree]
+						r = (4x^3 - 3x^2);
+					else: NO
+						[set the term in r of degree newDegree to be negative t_q];
+	
+				Iteration 1.2: t_v = x, u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+						r = (4x^3 - 3x^2), q = 0:
+					newDegree = (degShift) + (degree of t_v) = 3;
+					if r has term of degree (newDegree * t_v degree): YES
+						[subtract (t_q * (t_v coeff.)) from term in r of degree newDegree]
+						r = ((7/2)x^3 - 3x^2);
+					else: NO
+						[set the term in r of degree newDegree to be negative t_q];
+							
+			[set coeff. of degree degShift in q to be t_q] q = (1/2)x^2;
+			
+		Iteration 2: u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+				r = ((7/2)x^3 - 3x^2), q = (1/2)x^2:
+			t_q = (coeff. of highest r degree) / (coeff. of highest v degree) = 7/4;
+			degShift = (max degree in r) - (max degree in v) = 1;
+			foreach t_v in v:
+				Iteration 1.1: t_v = 2x^2, u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+						r = ((7/2)x^3 - 3x^2), q = (1/2)x^2:
+					newDegree = (degShift) + (degree of t_v) = 3;
+					if r has term of degree newDegree: YES
+						[subtract (t_q * (t_v coeff.)) from term in r of degree newDegree]
+						r = -3x^2;
+					else: NO
+						[set the term in r of degree (newDegree + t_v degree) to be negative t_q];
+	
+				Iteration 1.2: t_v = x, u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+						r = -3x^2, q = (1/2)x^2:
+					newDegree = (degShift) + (degree of t_v) = 2;
+					if q has term of degree (newDegree * t_v degree): YES
+						[subtract (t_q * (t_v coeff.)) from term in q of degree (newDegree + t_v degree)]
+						q = -(19/4)x^2;
+					else: NO
+						[set the term in q of degree (newDegree + t_v degree)to be negative t_q];
+							
+			[set coeff. of degree degShift in q to be t_q] q = ((1/2)x^2 + (7/4)x);
+			
+		Iteration 3: u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+				r = -(19/4)x^2, q = ((1/2)x^2 + (7/4)x):
+			t_q = (coeff. of highest r degree) / (coeff. of highest v degree) = -19/8;
+			degShift = (max degree in r) - (max degree in v) = 0;
+			foreach t_v in v:
+				Iteration 1.1: t_v = 2x^2, u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+						r = -(19/4)x^2, q = ((1/2)x^2 + (7/4)x):
+					newDegree = (degShift) + (degree of t_v) = 2;
+					if r has term of degree newDegree: YES
+						[subtract (t_q * (t_v coeff.)) from term in r of degree newDegree]
+						r = 0;
+					else: NO
+						[set the term in r of degree (newDegree + t_v degree) to be negative t_q];
+	
+				Iteration 1.2: t_v = x, u = (x^4 + 4x^3 - 3x^2), v = (2x^2 + x), ...
+						r = -3x^2, q = (1/2)x^2:
+					newDegree = (degShift) + (degree of t_v) = 1;
+					if q has term of degree (newDegree * t_v degree): NO
+						[subtract (t_q * (t_v coeff.)) from term in q of degree (newDegree + t_v degree)]
+					else: YES
+						[set the term in q of degree (newDegree + t_v degree) to be negative t_q]
+						r = -(19/8)x
+							
+			[set coeff. of degree degShift in q to be t_q] q = (1/2)x^2 + (7/4)x;
+	Done! q = u / v;
+		
+
+Problem 1.
+
+(a) 
+RatNum():
+	The constructor reduces the denominator, which we don't need
+	to do anymore since the rep has been changed to not require that.
+	Everything in the method enforces that denom >=0.
+	
+checkRep():
+	This method doesn't have to assert that the denom
+	must be reduced. Everything else in the method
+	just enforces denom >= 0.
+	
+equals():
+	This method only compares numerators and denominators
+	the way the are, not in a reduced form. This means a reduced
+	and non-reduced version of a polynomial won't be equivalent,
+	when they should be.
+	
+toString():
+	This method assumes that the denominator is reduced,
+	which it won't be. It will have to be reduced
+	before printing.
+	
+hashCode():
+	This method relies on the pure state of numer
+	and denom, meaning that since both are different
+	in a non-reduced form, the hash code that is
+	returned will be different. The poly will have to be
+	reduced before returning.
+
+(b)
+The spec says that the members are immutable, which wouldn't be
+honored if the members are allowed to be modified. Furthermore,
+there is no @modifies tag on any of the methods, which is
+required for all mutable members.
+	
+(c)
+It is not possible for any method to modify a RatNum
+since the members are immutable. The constructor
+does calculations/assignment based on illegal
+possibilities of numer and denom, which don't
+violate the rep, making a checkRep() call
+at the start unnecessary. 
+
+
+Problem 2.
+
+(a)
+I did not use checkRep() anywhere outside of the end of the
+RatTerm() constructor. Since any of the RatTerm's/RatNum's
+that are returned in any of the method being called,
+they have to go through the constructors for the
+RatTerm/RatNum, which call checkRep() at the end,
+making sure they are valid. The members are immutable,
+meaning the only time they are change (in the constructor),
+checkRep() is used to validate them.
+
+(b)
+The constructor would no longer have to set the exponent to zero
+if the coefficient is zero, and can just set it to the passed exponent.
+This makes our method a bit less complex.
+
+equals() should no longer compare exponents if the coefficients are zero,
+and should just return true. If the coefficients are non-zero and equal,
+then the method should compare exponents. This adds another test case,
+making our method more complex.
+
+In toString(), it would have to stop printing after the coefficient is printed,
+if the coefficient is zero. This would prevent printing the exponent
+since the number is zero, regardless of the exponent. This would make
+our method a bit more complex because of the extra test case at the
+start of the method.
+
+(c)
+The constructor would have to make sure to set the exponent to zero
+if the coefficient is zero. This would make sure the rep invariant stays true,
+making our method less complex.
+
+checkRep() would have to make sure that if a number has a zero coefficient,
+then it should also have a zero exponent. This would only be one more test
+case, but would keep the rep invariant still true. This makes our method
+a bit more complex.
+
+I prefer both since they would reduce the complexity of the code
+that deals with those cases. You could eliminate the test cases
+where a number is zero/NaN and still have a non-zero exponent;
+you don't have to have any decisions on what to do with these edge-cases.
+
+
+Problem 5.
