@@ -1,10 +1,13 @@
 package hw4.test;
 
+import edu.uw.cse.testbayes.runner.IndividualClassRandomRunner;
+import edu.uw.cse.testbayes.runner.IndividualClassRunner;
 import hw4.RatNum;
 import hw4.RatPoly;
 import hw4.RatTerm;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
@@ -13,6 +16,7 @@ import static org.junit.Assert.*;
  * implementation of the RatPoly class.
  * <p>
  */
+@RunWith(IndividualClassRunner.class)
 public final class RatPolyTest {
   private final double JUNIT_DOUBLE_DELTA = 0.00001;
 
@@ -89,7 +93,6 @@ public final class RatPolyTest {
 
   // make sure that unparsing a parsed string yields the string itself
   private void assertToStringWorks(String s) {
-    System.out.println(" Ret: " + valueOf(s).toString());
     assertEquals(s, valueOf(s).toString());
   }
 
